@@ -159,7 +159,7 @@
             <a href="#" id="manageMembersLink" class="fs-5 text-decoration-none text-muted" data-bs-toggle="modal" data-bs-target="#manageMembersModal"><i class="bi bi-person-plus"></i> Membros</a>
         </div>
         <div>
-            <a href="#" class="fs-5 text-decoration-none text-muted" data-bs-toggle="modal" data-bs-target="#newColumnModal"><i class="bi bi-plus"></i>Nova categoria</a>
+            <a href="#" class="fs-5 text-decoration-none text-muted" onclick="onNewColumn(event)"><i class="bi bi-plus"></i>Nova categoria</a>
         </div>
     </div>
 
@@ -212,9 +212,9 @@
                     $('.columns-div').append(`
                         <div class="col-3 column-div border-end border-1 overflow-auto" id="column-${column.id}">
                             <div class="colum-header p-1 d-flex justify-content-between align-items-center">
-                                <h5 class="" id="name" data-color="${column.color}" style="color: ${column.color};">${column.name}</h5>
+                                <h5 class="" id="name" data-color="${column.color}" style="color: ${column.color};">${column.name.substring(0, 18) + (column.name.length > 18 ? '...' : '')}</h5>
                                 <div class="colum-header-actions">
-                                    <a href="#" class="fs-5 text-decoration-none text-light-gray" data-bs-toggle="modal" data-bs-target="#editColumnModal" data-column-id="${column.id}" onclick="onEditColumnModal(${column.id}, event)"><i class="bi bi-pencil-square"></i></a>
+                                    <a href="#" class="fs-5 text-decoration-none text-light-gray" data-column-id="${column.id}" onclick="onEditColumnModal(${column.id}, event)"><i class="bi bi-pencil-square"></i></a>
                                     <a href="#" class="fs-5 text-decoration-none text-light-gray" onclick="onDeleteColumn(${column.id}, event)"><i class="bi bi-trash"></i></a>
                                 </div>
                             </div>
@@ -585,6 +585,13 @@
         event.stopImmediatePropagation();
 
         $('#editBoardModal').modal('show');
+    }
+
+    const onNewColumn = (event) => {
+        event.preventDefault();
+        event.stopImmediatePropagation();
+        
+        $('#newColumnModal').modal('show');
     }
 
 </script>

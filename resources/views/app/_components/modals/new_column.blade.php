@@ -47,14 +47,19 @@
 <script>
 // Submit form with ajax jQuery
 $('#newColumnForm').on('submit', function(e) {
+
+    const name = $('#newColumnModal #name').val();
+    const color = $('#newColumnModal #color').val();
+    const board_id = {{ $board->id }};
+
     e.preventDefault();
     $.ajax({
         url: '/columns',
         type: 'POST',
         data: {
-            name: $('#name').val(),
-            color: $('#color').val(),
-            board_id: {{ $board->id }},
+            name: name,
+            color: color,
+            board_id: board_id,
         },
         headers: {
             'X-CSRF-TOKEN': `{{ csrf_token() }}`,
@@ -64,9 +69,11 @@ $('#newColumnForm').on('submit', function(e) {
             console.log(response);
             columnsReload();
             loadColumns();
+            
             $('#newColumnModal').modal('hide');
         },
         error: function(xhr, status, error) {
+            $('#newColumnModal .error-message-container').html('');
             const errorMessageElement = $('.error-message-container');
             errorMessageElement.append(`${xhr.responseJSON.error.name[0]}`);
             errorMessageElement.removeClass('d-none');
