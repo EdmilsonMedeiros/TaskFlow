@@ -27,7 +27,7 @@
     -   Avançar task "rápido" para a próxima categoria com um click ->.
     -   Retornar task || para categoria anterior com um click
 
-**Vídeos demonstrativos:** <a href="https://drive.google.com/drive/folders/1XQuqhVIMJGTRdvko3Eo_6FEaq2ewtWnd?usp=sharing" target="_blank" rel="noopener noreferrer">Acesse aqui</a>
+**Vídeos demonstrativos:** <a href="https://drive.google.com/drive/folders/1XQuqhVIMJGTRdvko3Eo_6FEaq2ewtWnd?usp=sharing" target="_blank">Acesse aqui</a>
 
 
 ### Instruções para servir aplicação:
