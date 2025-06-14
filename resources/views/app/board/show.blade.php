@@ -143,7 +143,7 @@
         <div class="col-10">
             <div class="d-flex gap-3">
                 <h3 class="text-start board-name">{{ $board->name }}</h3>
-                <a href="#" class="text-decoration-none text-light-gray mt-2" data-bs-toggle="modal" data-bs-target="#editBoardModal" data-board-id="{{ $board->id }}"><i class="bi bi-pencil-square"></i></a>
+                <a href="#" class="text-decoration-none text-light-gray mt-2" onclick="onBoardEdit(event)"><i class="bi bi-pencil-square"></i></a>
             </div>
             <p class="text-muted board-description">{{ $board->description }}</p>
         </div>
@@ -524,7 +524,14 @@
                 moveCard(cardId, newColumnId, newPosition);
             }
         }).disableSelection();
-    };
+    };  
+
+    const onBoardEdit = (event) => {
+        event.preventDefault();
+        event.stopImmediatePropagation();
+
+        $('#editBoardModal').modal('show');
+    }
 
 </script>
 
