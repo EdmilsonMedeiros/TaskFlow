@@ -38,10 +38,7 @@
     -                     composer install
 -   Copie o arquivo .env.example como .env
     -                     cp .env.example .env
--   Configure o banco de dados no arquivo .env
--   Gere a APP_KEY
-
-    -                     php artisan key:generate
+-   Configure o banco de dados com suas credênciais no arquivo .env
 
     -                     DB_CONNECTION=pgsql
                           DB_HOST=127.0.0.1
@@ -49,6 +46,10 @@
                           DB_DATABASE=postgres
                           DB_USERNAME=postgres
                           DB_PASSWORD=dev
+
+-   Gere a APP_KEY
+
+    -                     php artisan key:generate
 
 -   Execute as migrations
     -                     php artisan migrate
