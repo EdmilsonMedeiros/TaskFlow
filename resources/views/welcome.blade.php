@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="hero-section d-flex align-items-center">
-    <div class="container">
+    <div class="container mt-5">
         <div class="row justify-content-center">
             <div class="col-lg-8 text-center">
                 <h1 class="logo mb-3"><i class="bi bi-kanban"></i> TaskFlow</h1>
