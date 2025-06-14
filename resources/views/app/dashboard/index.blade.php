@@ -15,7 +15,7 @@
             <input type="text" class="form-control px-5 w-100" placeholder="Pesquisar" id="search-input" oninput="searchLoadBoards()">
         </div>
         <div class="col-md-6 mt-3 d-flex justify-content-end align-items-center">
-            <a href="#" class="text-decoration-none fs-5 text-muted" data-bs-toggle="modal" data-bs-target="#newBoardModal">
+            <a href="#" class="text-decoration-none fs-5 text-muted" onclick="onNewBoardModal(event)">
                 <i class="bi bi-plus"></i> Novo Quadro
             </a>
         </div>
@@ -33,6 +33,7 @@
 </div>
 
 @include('app._components.modals.delete_board')
+@include('app._components.modals.new_board')
 
 <script>
 
@@ -186,7 +187,12 @@ const onDeleteBoard = async (id, event) => {
     await $('#deleteBoardModal').modal('show');
 }
 
-</script>
+const onNewBoardModal = (event) => {
+    event.preventDefault();
+    event.stopImmediatePropagation();
 
-@include('app._components.modals.new_board')
+    $('#newBoardModal').modal('show');
+}
+
+</script>
 @endsection

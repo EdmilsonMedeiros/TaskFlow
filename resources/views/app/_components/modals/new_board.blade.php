@@ -6,7 +6,7 @@
 </style>
 
 <!-- Modal -->
-<div class="modal fade" id="newBoardModal" tabindex="-1" aria-labelledby="newBoardModalLabel" aria-hidden="true" data-bs-backdrop="static">
+<div class="modal fade" id="newBoardModal" tabindex="-1" aria-labelledby="newBoardModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
 
@@ -56,10 +56,10 @@ $('#newBoardForm').on('submit', function(e) {
             'Accept': 'application/json',
         },
         success: function(response) {
+            $('#newBoardModal').modal('hide');
+
             boardsReload();
             loadBoards();
-
-            $('#newBoardModal').modal('hide');
         },
         error: function(xhr, status, error) {
             const errorMessageElement = $('.error-message-container');
