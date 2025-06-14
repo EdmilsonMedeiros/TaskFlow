@@ -246,7 +246,7 @@
                                         </div>
                                     </div>
                                 `).join('')}
-                            </div>
+                            </div>  
                         </div>
                     `);
                 });
@@ -277,6 +277,7 @@
 
                 await $('#showCardModal .column-div-show').append(`
                     <span class="w-100 text-decoration-none text-start fs-6" style="color: ${response.column.color};">
+                        <a href="#" class="fs-5 text-decoration-none text-light-gray mt-1" onclick="previousColumn(${cardId}, event)"><i class="bi bi-arrow-left"></i></a>
                         ${response.column.name}
                         <a href="#" class="fs-5 text-decoration-none text-light-gray mt-1" onclick="nextColumn(${cardId}, event)"><i class="bi bi-arrow-right"></i></a>
                     </span>
@@ -289,6 +290,41 @@
                 console.log(xhr.responseText);
             }
         });
+    }
+
+    const previousColumn = async (cardId, event) => {
+        event.preventDefault();
+        event.stopImmediatePropagation();
+
+        $.ajax({
+            url: `/cards/cardPrevious/${cardId}`,
+            type: 'PUT',
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                'Accept': 'application/json',
+            },
+            success: async function(response) {
+                console.log(response);
+
+                await $('#showCardModal .column-div-show').html('');
+
+                await $('#showCardModal .column-div-show').append(`
+                    <span class="w-100 text-decoration-none text-start fs-6" style="color: ${response.column.color};">
+                        <a href="#" class="fs-5 text-decoration-none text-light-gray mt-1" onclick="previousColumn(${cardId}, event)"><i class="bi bi-arrow-left"></i></a>
+                        ${response.column.name}
+                        <a href="#" class="fs-5 text-decoration-none text-light-gray mt-1" onclick="nextColumn(${cardId}, event)"><i class="bi bi-arrow-right"></i></a>
+                    </span>
+                `);
+
+                columnsReload();
+                loadColumns();
+            },
+            error: function(xhr, status, error) {
+                console.log(xhr.responseText);
+            }
+        });
+
+        return;
     }
 
     const onEditColumnModal = async (columnId, event) => {
@@ -412,6 +448,7 @@
 
                 await $('#showCardModal .column-div-show').append(`
                     <span class="w-100 text-decoration-none text-start fs-6" style="color: ${response.column.color};">
+                        <a href="#" class="fs-5 text-decoration-none text-light-gray mt-1" onclick="previousColumn(${cardId}, event)"><i class="bi bi-arrow-left"></i></a>
                         ${response.column.name}
                         <a href="#" class="fs-5 text-decoration-none text-light-gray mt-1" onclick="nextColumn(${cardId}, event)"><i class="bi bi-arrow-right"></i></a>
                     </span>

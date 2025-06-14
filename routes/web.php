@@ -47,6 +47,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::put('/{id}/move', [CardController::class, 'move'])->name('card.move');
         Route::get('/', [CardController::class, 'myCards'])->name('card.myCards');
         Route::put('/cardNext/{id}', [CardController::class, 'cardNext'])->name('card.cardNext');
+        Route::put('/cardPrevious/{id}', [CardController::class, 'cardPrevious'])->name('card.cardPrevious');
     });
     
 });

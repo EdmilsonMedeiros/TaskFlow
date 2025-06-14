@@ -141,4 +141,27 @@ class CardController extends Controller
 
         return response()->json($card, 200);
     }
+
+    public function cardPrevious(Request $request, $id)
+    {
+        $card = Card::find($id);
+        $actualColumn = Column::find($card->column_id);
+        $previousColumn = Column::where('board_id', $actualColumn->board_id)->where('position', $actualColumn->position - 1)->first();
+
+        if (!$previousColumn) {
+            return response()->json(['message' => 'Não há mais colunas para retroceder'], 400);
+        }
+
+        try{
+            $card->update([
+                'column_id' => $previousColumn->id,
+            ]);
+            
+            $card->load('column');
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Erro ao retroceder task'], 500);
+        }
+
+        return response()->json($card, 200);
+    }
 }

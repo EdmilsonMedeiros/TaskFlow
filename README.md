@@ -24,29 +24,30 @@
     -   Reordenar a task dentro da categoria com arrasta e solta;
     -   Mover a task entre as categorias com arrasta e solta;
     -   Avançar task "rápido" para a próxima categoria com um click ->.
+    -   Retornar task || para categoria anterior com um click
 
 ### Instruções para servir aplicação:
 
 -   Clone o repositório
-    -               git clone https://github.com/EdmilsonMedeiros/TaskFlow.git
+    -                 git clone https://github.com/EdmilsonMedeiros/TaskFlow.git
 -   Instale o composer
-    -               composer install
+    -                 composer install
 -   Copie o arquivo .env.example como .env
-    -               cp .env.example .env
+    -                 cp .env.example .env
 -   Configure o banco de dados no arquivo .env
 -   Gere a APP_KEY
 
-    -               php artisan key:generate
+    -                 php artisan key:generate
 
-    -               DB_CONNECTION=pgsql
-                    DB_HOST=127.0.0.1
-                    DB_PORT=5432
-                    DB_DATABASE=postgres
-                    DB_USERNAME=postgres
-                    DB_PASSWORD=dev
+    -                 DB_CONNECTION=pgsql
+                      DB_HOST=127.0.0.1
+                      DB_PORT=5432
+                      DB_DATABASE=postgres
+                      DB_USERNAME=postgres
+                      DB_PASSWORD=dev
 
 -   Execute as migrations
-    -               php artisan migrate
+    -                 php artisan migrate
 -   Sirva a aplicação
-    -             php artisan serve
+    -               php artisan serve
 -   Acesse a URL na qual a aplicação foi servida, crie uma conta e pronto.
