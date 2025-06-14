@@ -2,12 +2,12 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header border-0">
-                <h1 class="modal-title fs-5" id="deleteColumnModalLabel">Deletar Coluna</h1>
+                <h1 class="modal-title fs-5" id="deleteColumnModalLabel">Deletar Categoria</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
             <div class="modal-body">
-                <p>Tem certeza que deseja deletar a coluna?</p>
+                <p>Tem certeza que deseja deletar a categoria?</p>
             </div>
 
             <div class="modal-footer border-0">
