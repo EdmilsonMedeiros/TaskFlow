@@ -11,20 +11,16 @@
                     Organize suas tarefas de forma visual e eficiente. Gerencie projetos, 
                     acompanhe o progresso e colabore com sua equipe usando o método Kanban.
                 </p>
-                
-                <div class="d-flex justify-content-between align-items-center">
-                    <div class="d-flex justify-content-center mt-1 mb-1">
-                        <img src="{{ asset('images/kanban.png') }}" alt="TaskFlow" class="img-fluid rounded-1" style="width: 75%;">
-                    </div>
-                    <div class="d-flex flex-column gap-3">
-                        <a href="/register" class="text-white mt-3 fw-bold fs-5">Cadastrar</a>
+                <div class="justify-content-center align-items-center">
+                    <div class="d-flex justify-content-center align-items-center gap-5">
+                        <a href="/register" class="text-white fw-bold fs-5">Cadastrar-se</a>
                         <div>
-                            <a href="/login" class="btn btn-light login-btn-custom text-white">Login</a>
+                            <a href="/login" class="btn btn-light login-btn-custom text-white">Fazer Login</a>
                         </div>
                     </div>
                 </div>
                 
-                <div class="row mt-5 mb-5 g-4">
+                <div class="row mt-0 mb-5 g-4">
                     <div class="col-md-4">
                         <div class="card feature-card h-100 p-4 text-center">
                             <div class="card-body">

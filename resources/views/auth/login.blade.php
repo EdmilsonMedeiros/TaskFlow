@@ -3,11 +3,11 @@
 @section('content')
     <div class="container d-flex align-items-center" style="min-height: 100vh;">
         <div class="row justify-content-center w-100">
-            <div class="justify-content-center col-md-6 p-5">
+            <div class="justify-content-center col-12 col-xs-12 col-sm-12 col-md-12 col-lg-6 p-5">
                 <h4 class="mb-0 text-white fs-1"><i class="bi bi-kanban"></i> Login TaskFlow</h4>
                 <p class="text-white fs-6">Faça login para continuar</p>
             </div>
-            <div class="col-md-6">
+            <div class="col-12 col-xs-12 col-sm-12 col-md-12 col-lg-6">
                 <div class="card p-5">
                     <div class="card-body">
                         
