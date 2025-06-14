@@ -7,8 +7,8 @@
                 <h4 class="mb-0 text-white fs-1"><i class="bi bi-kanban"></i> Login TaskFlow</h4>
                 <p class="text-white fs-6">Faça login para continuar</p>
             </div>
-            <div class="col-12 col-xs-12 col-sm-12 col-md-12 col-lg-6">
-                <div class="card p-5">
+            <div class="col-12 col-xs-12 col-sm-12 col-md-12 col-lg-6 mt-5">
+                <div class="card p-2">
                     <div class="card-body">
                         
                         @if (session('error'))

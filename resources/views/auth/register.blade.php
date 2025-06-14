@@ -12,8 +12,8 @@
                     <img src="{{ asset('images/kanban2.png') }}" alt="TaskFlow" class="img-fluid rounded-2" style="width: 80%; margin-top: 300px; margin-left: -200px;">
                 </div>
             </div>
-            <div class="col-12 col-xs-12 col-sm-12 col-md-12 col-lg-6">
-                <div class="card p-5">
+            <div class="col-12 col-xs-12 col-sm-12 col-md-12 col-lg-6 mt-5">
+                <div class="card p-2">
                     <div class="card-body">
                         <form method="POST" action="{{ route('register') }}">
                             @csrf
@@ -46,7 +46,7 @@
                                 @enderror
                             </div>
                             <div class="d-flex justify-content-between">
-                                <a href="{{ route('login') }}" class="text-dark mt-2">Já tem uma conta? <br><b>Entrar</b></a>
+                                <a href="{{ route('login') }}" class="text-dark mt-2"><b>Fazer login</b></a>
                                 <button type="submit" class="btn btn-outline-primary btn-lg">Cadastrar</button>
                             </div>
                         </form>
