@@ -3,7 +3,7 @@
 @section('content')
 <div class="container-fluid p-5">
 
-    <h3 class="text-start mb-4 fs-5 text-muted">Resumo das tasks</h3>
+    <h3 class="text-start mb-4 fs-5 text-muted">Resumo das suas tasks</h3>
     <div class="row tasks-div mb-3">
         {{-- Show the tasks --}}
     </div>

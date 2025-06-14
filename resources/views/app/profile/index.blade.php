@@ -16,7 +16,7 @@
         </div>
     </div>
 
-    <div class="justify-content-start gap-2 col-6">
+    <div class="justify-content-start gap-2 col-12 col-xs-12 col-md-6">
         @if (session('success'))
             <div class="alert alert-success">
                 {{ session('success') }}
