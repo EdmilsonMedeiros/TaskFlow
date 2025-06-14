@@ -270,8 +270,17 @@
                 'X-CSRF-TOKEN': '{{ csrf_token() }}',
                 'Accept': 'application/json',
             },
-            success: function(response) {
+            success: async function(response) {
                 console.log(response);
+                
+                await $('#showCardModal .column-div-show').html('');
+
+                await $('#showCardModal .column-div-show').append(`
+                    <span class="w-100 text-decoration-none text-start fs-6" style="color: ${response.column.color};">
+                        ${response.column.name}
+                        <a href="#" class="fs-5 text-decoration-none text-light-gray mt-1" onclick="nextColumn(${cardId}, event)"><i class="bi bi-arrow-right"></i></a>
+                    </span>
+                `);
 
                 columnsReload();
                 loadColumns();
@@ -399,6 +408,14 @@
                 await $('#showCardModal #title').val(response.title);
                 await $('#showCardModal #description').val(response.description);
                 await $('#showCardModal').data('card-id', response.id);
+                await $('#showCardModal .column-div-show').html('');
+
+                await $('#showCardModal .column-div-show').append(`
+                    <span class="w-100 text-decoration-none text-start fs-6" style="color: ${response.column.color};">
+                        ${response.column.name}
+                        <a href="#" class="fs-5 text-decoration-none text-light-gray mt-1" onclick="nextColumn(${cardId}, event)"><i class="bi bi-arrow-right"></i></a>
+                    </span>
+                `);
 
                 if (response.assigned_user_id) {
                     $('#showCardModal .assigned-user-div').html('');

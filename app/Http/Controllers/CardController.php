@@ -37,7 +37,7 @@ class CardController extends Controller
     public function get(Request $request, $id)
     {
         $card = Card::find($id);
-        $card->load('assignedUser');
+        $card->load(['assignedUser', 'column']);
         return response()->json($card, 200);
     }
 
@@ -133,6 +133,8 @@ class CardController extends Controller
             $card->update([
                 'column_id' => $nextColumn->id,
             ]);
+            
+            $card->load('column');
         } catch (\Exception $e) {
             return response()->json(['message' => 'Erro ao avançar task'], 500);
         }

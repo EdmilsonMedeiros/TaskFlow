@@ -21,8 +21,14 @@
                 {{-- Errro messages --}}
             </div>
 
-            <div class="d-flex justify-content-start assigned-user-div mb-3">
+            <div class="d-flex justify-content-between mb-3">
+                <div class="d-flex justify-content-start assigned-user-div mb-3">
 
+                </div>
+    
+                <div class="d-flex justify-content-end column-div-show mb-3">
+    
+                </div>
             </div>
 
             <form id="showCardForm" action="" method="POST">
