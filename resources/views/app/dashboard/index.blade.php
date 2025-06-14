@@ -108,7 +108,7 @@ const loadBoards = async (page = 1) => {
 
                                 <div class="gap-2 ">
                                     <a href="/boards/${board.id}" class="btn btn-outline-secondary mt-2"><i class="bi bi-eye"></i></a>
-                                    <a href="#" class="btn btn-outline-danger mt-2" onclick="onDeleteBoard(${board.id}, event)"><i class="bi bi-trash text-danger"></i></a>
+                                    <a href="#" class="btn btn-outline-danger mt-2" onclick="onDeleteBoard(${board.id}, event)"><i class="bi bi-trash"></i></a>
                                 </div>
                             </div>
                         </div>
