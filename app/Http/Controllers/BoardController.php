@@ -8,6 +8,9 @@ use App\Models\User;
 use App\Models\Board;
 use App\Models\BoardHasUser;
 use Illuminate\Support\Facades\DB;
+use App\Http\Requests\StoreBoardRequest;
+use App\Http\Requests\UpdateBoardRequest;
+use App\Http\Requests\AddUserToBoardRequest;
 
 class BoardController extends Controller
 {
@@ -43,23 +46,8 @@ class BoardController extends Controller
         return view('app.board.show', compact('board'));
     }
 
-    public function store(Request $request)
+    public function store(StoreBoardRequest $request)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
-            'description' => 'nullable|string|max:255',
-        ], [
-            'name.required' => 'O nome do board é obrigatório',
-            'name.string' => 'O nome do board deve ser uma string',
-            'name.max' => 'O nome do board deve ter no máximo 255 caracteres',
-            'description.string' => 'A descrição do board deve ser uma string',
-            'description.max' => 'A descrição do board deve ter no máximo 255 caracteres',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()], 422);
-        }
-
         try{
             $board = Board::create([
                 'name' => $request->name,
@@ -92,23 +80,8 @@ class BoardController extends Controller
         return response()->json(['message' => 'Board deletado com sucesso']);
     }
 
-    public function update(Request $request, $id)
+    public function update(UpdateBoardRequest $request, $id)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
-            'description' => 'nullable|string|max:255',
-        ], [
-            'name.required' => 'O nome do board é obrigatório',
-            'name.string' => 'O nome do board deve ser uma string',
-            'name.max' => 'O nome do board deve ter no máximo 255 caracteres',
-            'description.string' => 'A descrição do board deve ser uma string',
-            'description.max' => 'A descrição do board deve ter no máximo 255 caracteres',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()], 422);
-        }
-
         try{
             $board = Board::find($id);
             $board->update($request->all());
@@ -129,7 +102,6 @@ class BoardController extends Controller
 
     public function removeUserFromBoard($id, $userId)
     {
-
         $validator = Validator::make(['userId' => $userId, 'boardId' => $id], [
             'userId' => 'required|exists:users,id|not_in:' . auth()->user()->id,
             'boardId' => 'required|exists:boards,id',
@@ -160,21 +132,8 @@ class BoardController extends Controller
         return response()->json(['message' => 'Usuário removido do board com sucesso'], 200);
     }
 
-    public function addUserToBoard(Request $request)
+    public function addUserToBoard(AddUserToBoardRequest $request)
     {
-        $validator = Validator::make($request->all(), [
-            'email' => 'required|email|exists:users,email',
-            'board_id' => 'required|exists:boards,id',
-        ], [
-            'email.required' => 'O email do usuário é obrigatório',
-            'email.email' => 'O email do usuário deve ser um email válido',
-            'email.exists' => 'O email do usuário não existe',
-        ]);
-        
-        if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()], 422);
-        }
-
         $board = Board::find($request->board_id);
         $user = User::where('email', $request->email)->first();
 

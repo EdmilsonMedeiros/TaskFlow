@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Column;
 use App\Models\Board;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Requests\StoreColumnRequest;
+use App\Http\Requests\UpdateColumnRequest;
 
 class ColumnController extends Controller
 {
@@ -13,36 +15,29 @@ class ColumnController extends Controller
     {
         $columns = Board::find($boardId)->columns()->orderBy('position', 'asc')->get();
 
-        $columns->load(['cards' => function($query) {
-            $query->orderBy('position', 'asc');
-            $query->with('assignedUser');
-        }]);
+        if(!$columns){
+            return response()->json(['error' => 'Colunas não encontradas'], 404);
+        }
+
+        try{
+            $columns->load(['cards' => function($query) {
+                $query->orderBy('position', 'asc');
+                $query->with('assignedUser');
+            }]);
+        }catch(\Exception $e){
+            return response()->json(['error' => 'Erro ao carregar colunas'], 500);
+        }
 
         return response()->json($columns, 200);
     }
 
-    public function store(Request $request)
+    public function store(StoreColumnRequest $request)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
-            'color' => 'required|string|max:255',
-            'board_id' => 'required|exists:boards,id',
-        ], [
-            'name.required' => 'O nome da coluna é obrigatório',
-            'name.string' => 'O nome da coluna deve ser uma string',
-            'name.max' => 'O nome da coluna deve ter no máximo 255 caracteres',
-            'color.required' => 'A cor da coluna é obrigatória',
-            'color.string' => 'A cor da coluna deve ser uma string',
-            'color.max' => 'A cor da coluna deve ter no máximo 255 caracteres',
-            'board_id.required' => 'O ID do quadro é obrigatório',
-            'board_id.exists' => 'O ID do quadro não existe',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()], 422);
-        }
-
         $board = Board::find($request->board_id);
+
+        if(!$board){
+            return response()->json(['error' => 'Quadro não encontrado'], 404);
+        }
 
         try{
             $board->columns()->create([
@@ -76,12 +71,10 @@ class ColumnController extends Controller
 
     public function move(Request $request, $id)
     {
-        $validator = Validator::make($request->all(), [
-            'position' => 'required|integer',
-        ]);
+        $column = Column::find($id);
 
-        if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()], 422);
+        if(!$column){
+            return response()->json(['error' => 'Coluna não encontrada'], 404);
         }
 
         try{
@@ -105,28 +98,12 @@ class ColumnController extends Controller
         return response()->json(['message' => 'Coluna movida com sucesso'], 200);
     }
 
-    public function update(Request $request, $id)
+    public function update(UpdateColumnRequest $request, $id)
     {
         $column = Column::find($id);
 
         if(!$column){
             return response()->json(['error' => 'Coluna não encontrada'], 422);
-        }
-
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
-            'color' => 'required|string|max:255',
-        ], [
-            'name.required' => 'O nome da coluna é obrigatório',
-            'name.string' => 'O nome da coluna deve ser uma string',
-            'name.max' => 'O nome da coluna deve ter no máximo 255 caracteres',
-            'color.required' => 'A cor da coluna é obrigatória',
-            'color.string' => 'A cor da coluna deve ser uma string',
-            'color.max' => 'A cor da coluna deve ter no máximo 255 caracteres',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()], 422);
         }
 
         try{

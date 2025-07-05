@@ -27,7 +27,6 @@
                 </div>
     
                 <div class="d-flex justify-content-end column-div-show mb-3">
-    
                 </div>
             </div>
 
@@ -83,7 +82,8 @@ $('#showCardForm').on('submit', function(e) {
         },
         error: function(xhr, status, error) {
             const errorMessageElement = $('.error-message-container');
-            errorMessageElement.text(xhr.responseJSON.errors.title[0]);
+            const errorMessage = xhr.responseJSON.error ? xhr.responseJSON.error.title[0] ?? xhr.responseJSON.error.description[0] ?? xhr.responseJSON.error.assigned_user_id[0] : xhr.responseJSON.errors;
+            errorMessageElement.text(errorMessage);
             errorMessageElement.removeClass('d-none');
         }
     });

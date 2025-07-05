@@ -6,20 +6,14 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Column;
 use App\Models\Card;
+use App\Http\Requests\StoreCardRequest;
+use App\Http\Requests\UpdateCardRequest;
+use App\Http\Requests\MoveCardRequest;
 
 class CardController extends Controller
 {
-    public function store(Request $request)
+    public function store(StoreCardRequest $request)
     {
-        $validator = Validator::make($request->all(), [
-            'title' => 'required|string|max:255',
-            'column_id' => 'required|exists:columns,id',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
-        }
-
         $column = Column::find($request->column_id);
 
         try{
@@ -41,24 +35,8 @@ class CardController extends Controller
         return response()->json($card, 200);
     }
 
-    public function update(Request $request, $id)
+    public function update(UpdateCardRequest $request, $id)
     {
-        $validator = Validator::make($request->all(), [
-            'title' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'assigned_user_id' => 'nullable|exists:users,id',
-        ], [
-            'title.required' => 'O título da task é obrigatório',
-            'title.string' => 'O título da task deve ser uma string',
-            'title.max' => 'O título da task deve ter no máximo 255 caracteres',
-            'description.string' => 'A descrição da task deve ser uma string',
-            'assigned_user_id.exists' => 'O membro selecionado não existe',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
-        }
-
         $card = Card::find($id);
 
         try{
@@ -83,17 +61,8 @@ class CardController extends Controller
         return response()->json(['message' => 'Task deletada com sucesso'], 200);
     }
 
-    public function move(Request $request, $id)
+    public function move(MoveCardRequest $request, $id)
     {
-        $validator = Validator::make($request->all(), [
-            'column_id' => 'required|exists:columns,id',
-            'position' => 'required|integer',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
-        }
-
         $card = Card::find($id);
         
         try{
