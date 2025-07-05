@@ -9,9 +9,18 @@ use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\UpdateProfileRequest;
+use App\Http\Services\UserService;
 
 class AuthController extends Controller
 {
+
+    private $userService;
+
+    public function __construct(UserService $userService)
+    {
+        $this->userService = $userService;
+    }
+
     public function login()
     {
         return view('auth.login');
@@ -25,19 +34,13 @@ class AuthController extends Controller
     public function registerUser(RegisterRequest $request)
     {
         try{
-            $user = User::create([
-                'name' => $request->name,
-                'email' => $request->email,
-                'password' => Hash::make($request->password),
-            ]);
+            $user = $this->userService->createUser($request->name, $request->email, $request->password);
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Erro ao criar conta!');
         }
 
-        // Autenticar o usuário
         Auth::login($user);
         $request->session()->regenerate();
-
 
         return redirect()->route('dashboard')->with('success', 'Conta criada com sucesso!');
     }
@@ -66,16 +69,8 @@ class AuthController extends Controller
 
     public function updateProfile(UpdateProfileRequest $request)
     {
-        $user = auth()->user();
-        $user->name = $request->name;
-        $user->email = $request->email;
-
-        if ($request->password) {
-            $user->password = Hash::make($request->password);
-        }
-
         try{
-            $user->save();
+            $user = $this->userService->updateUserProfile(auth()->user()->id, $request->name, $request->email, $request->password);
         } catch (\Exception $e) {
             return redirect()->route('profile')->with('error', 'Erro ao atualizar perfil!');
         }
