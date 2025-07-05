@@ -125,6 +125,7 @@
 
     loadColumns();
 
+    // Move o card para a próxima coluna
     const nextColumn = async (cardId, event) => {
         $.ajax({
             url: `/cards/cardNext/${cardId}`,
@@ -155,6 +156,7 @@
         });
     }
 
+    // Move o card para a coluna anterior
     const previousColumn = async (cardId, event) => {
         event.preventDefault();
         event.stopImmediatePropagation();
@@ -190,6 +192,7 @@
         return;
     }
 
+    // Edit column
     const onEditColumnModal = async (columnId, event) => {
 
         const column = await $('#column-' + columnId);
@@ -386,63 +389,63 @@
 
     // Inicializa o drag and drop
     const initializeDragAndDrop = () => {
-        // Mantém a parte das colunas como está
         $('.column-div').draggable({
-            axis: 'x',
-            handle: '.colum-header',
-            cursor: 'move',
-            revert: true,
+            axis: 'x', // Restringe o movimento apenas no eixo X (horizontal)
+            handle: '.colum-header', // Define o elemento que será usado para arrastar a coluna
+            cursor: 'move', // Define o cursor do mouse como uma seta de movimento
+            revert: true, // Restringe o movimento apenas no eixo X (horizontal)
             start: function(event, ui) {
-                $(this).addClass('dragging');
+                $(this).addClass('dragging'); // Adiciona a classe 'dragging' quando o arrastar começa
             },
             stop: function(event, ui) {
-                $(this).removeClass('dragging');
+                $(this).removeClass('dragging'); // Remove a classe 'dragging' quando o arrastar termina
             }
         });
 
         $('.columns-div').droppable({
-            accept: '.column-div',
+            accept: '.column-div', // Define que apenas elementos com a classe 'column-div' podem ser soltos
             drop: function(event, ui) {
-                const droppedColumn = ui.draggable;
-                const targetColumn = $(event.target);
+                const droppedColumn = ui.draggable; // Obtém o elemento que está sendo arrastado
+                const targetColumn = $(event.target); // Obtém o elemento alvo onde o elemento arrastado será solto
                 
-                const columns = $('.column-div').toArray();
-                const newPosition = columns.indexOf(droppedColumn[0]);
+                const columns = $('.column-div').toArray(); // Obtém todos os elementos com a classe 'column-div'
+                const newPosition = columns.indexOf(droppedColumn[0]); // Obtém a posição do elemento arrastado na lista de colunas
                 
-                const columnId = droppedColumn.attr('id').split('-')[1];
-                moveColumn(columnId, newPosition);
+                const columnId = droppedColumn.attr('id').split('-')[1]; // Obtém o ID da coluna arrastada
+                moveColumn(columnId, newPosition); // Move a coluna para a nova posição
             }
         });
 
         // Nova implementação para os cards
         $('.cards-div').sortable({
-            connectWith: '.cards-div',
-            items: '.card',
-            handle: '.drag-handle',
-            placeholder: 'card-placeholder',
-            forcePlaceholderSize: true,
-            opacity: 0.8,
-            revert: true,
-            tolerance: 'pointer',
+            connectWith: '.cards-div', // Define que os cards podem ser arrastados entre si
+            items: '.card', // Define que apenas elementos com a classe 'card' podem ser arrastados
+            handle: '.drag-handle', // Define o elemento que será usado para arrastar o card
+            placeholder: 'card-placeholder', // Define o placeholder que será usado para indicar a posição do card
+            forcePlaceholderSize: true, // Força o tamanho do placeholder a ser o mesmo do card
+            opacity: 0.8, // Define a opacidade do placeholder
+            revert: true, // Restringe o movimento apenas no eixo X (horizontal)
+            tolerance: 'pointer', // Define a tolerância para o arrastar
             start: function(event, ui) {
-                ui.placeholder.height(ui.item.height() * 2);
-                ui.item.addClass('dragging');
+                ui.placeholder.height(ui.item.height() * 2); // Define a altura do placeholder
+                ui.item.addClass('dragging'); // Adiciona a classe 'dragging' quando o arrastar começa
             },
             stop: function(event, ui) {
-                ui.item.removeClass('dragging');
+                ui.item.removeClass('dragging'); // Remove a classe 'dragging' quando o arrastar termina
             },
             update: function(event, ui) {
-                if (!ui.item) return;
+                if (!ui.item) return; // Verifica se o item existe
                 
-                const cardId = ui.item.attr('id').split('-')[1];
-                const newColumnId = ui.item.closest('.column-div').attr('id').split('-')[1];
-                const newPosition = ui.item.index();
+                const cardId = ui.item.attr('id').split('-')[1]; // Obtém o ID do card
+                const newColumnId = ui.item.closest('.column-div').attr('id').split('-')[1]; // Obtém o ID da coluna onde o card foi solto
+                const newPosition = ui.item.index(); // Obtém a posição do card na coluna
                 
-                moveCard(cardId, newColumnId, newPosition);
+                moveCard(cardId, newColumnId, newPosition); // Move o card para a nova posição e coluna
             }
-        }).disableSelection();
+        }).disableSelection(); // Desabilita a seleção de texto no card
     };  
 
+    // Edit board
     const onBoardEdit = (event) => {
         event.preventDefault();
         event.stopImmediatePropagation();
@@ -450,6 +453,7 @@
         $('#editBoardModal').modal('show');
     }
 
+    // New column
     const onNewColumn = (event) => {
         event.preventDefault();
         event.stopImmediatePropagation();
